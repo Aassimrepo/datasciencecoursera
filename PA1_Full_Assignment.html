@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Reproducible Research - PA1</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        pre { background-color: #f4f4f4; padding: 15px; overflow-x: auto; }
+        h1, h2 { color: #333; }
+    </style>
+</head>
+<body>
+
+<h1>Reproducible Research - Programming Assignment 1</h1>
+
+<h2>1. Reading and Processing the Data</h2>
+<pre><code>
+data <- read.csv("activity.csv")
+data$date <- as.Date(data$date)
+summary(data)
+head(data)
+</code></pre>
+
+<h2>2. Histogram of Total Steps Taken Each Day</h2>
+<pre><code>
+total_steps <- aggregate(steps ~ date, data, sum, na.rm = TRUE)
+
+hist(total_steps$steps,
+     main="Histogram of Total Steps per Day",
+     xlab="Total Steps per Day")
+</code></pre>
+
+<h2>3. Mean and Median Number of Steps Taken Each Day</h2>
+<pre><code>
+mean_steps <- mean(total_steps$steps, na.rm = TRUE)
+median_steps <- median(total_steps$steps, na.rm = TRUE)
+
+mean_steps
+median_steps
+</code></pre>
+
+<h2>4. Time Series Plot of Average Number of Steps per 5-Minute Interval</h2>
+<pre><code>
+avg_interval <- aggregate(steps ~ interval, data, mean, na.rm = TRUE)
+
+plot(avg_interval$interval,
+     avg_interval$steps,
+     type="l",
+     xlab="5-Minute Interval",
+     ylab="Average Number of Steps",
+     main="Average Daily Activity Pattern")
+</code></pre>
+
+<h2>5. 5-Minute Interval with Maximum Average Steps</h2>
+<pre><code>
+max_interval <- avg_interval[which.max(avg_interval$steps), ]
+max_interval
+</code></pre>
+
+<h2>6. Imputing Missing Values</h2>
+<pre><code>
+# Count missing values
+sum(is.na(data$steps))
+
+# Create copy of dataset
+data_imputed <- data
+
+# Replace NA values with mean for that 5-min interval
+for (i in 1:nrow(data_imputed)) {
+  if (is.na(data_imputed$steps[i])) {
+    interval_val <- data_imputed$interval[i]
+    data_imputed$steps[i] <- avg_interval$steps[avg_interval$interval == interval_val]
+  }
+}
+
+# Verify no missing values remain
+sum(is.na(data_imputed$steps))
+</code></pre>
+
+<h2>7. Histogram After Imputing Missing Values</h2>
+<pre><code>
+total_steps_imputed <- aggregate(steps ~ date, data_imputed, sum)
+
+hist(total_steps_imputed$steps,
+     main="Histogram of Total Steps per Day (Imputed)",
+     xlab="Total Steps per Day")
+</code></pre>
+
+<h2>8. Panel Plot Comparing Weekdays and Weekends</h2>
+<pre><code>
+data_imputed$weekday <- ifelse(weekdays(data_imputed$date) %in% 
+                                c("Saturday", "Sunday"),
+                                "weekend", "weekday")
+
+library(lattice)
+
+avg_interval_type <- aggregate(steps ~ interval + weekday,
+                                data_imputed, mean)
+
+xyplot(steps ~ interval | weekday,
+       data = avg_interval_type,
+       type="l",
+       layout=c(1,2),
+       xlab="5-Minute Interval",
+       ylab="Average Number of Steps")
+</code></pre>
+
+<p>All R code required to reproduce the analysis, plots, and numerical results is included above.</p>
+
+</body>
+</html>
