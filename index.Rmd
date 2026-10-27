@@ -18,9 +18,9 @@ library(leaflet)
 
 ## Six cities. A thousand possible stories.
 
-From Delhi to Chennai, explore a small collection of India's cities. Click a glowing marker to discover a place, zoom in to explore its streets, or switch the basemap for a different perspective.
+From Delhi to Chennai, explore a small collection of India's cities. Click a glowing marker to discover a place, zoom in to explore its streets.
 
-<div class="stats"><span><strong>6</strong> cities</span><span><strong>2</strong> map styles</span><span><strong>1</strong> country to explore</span></div>
+<div class="stats"><span><strong>6</strong> cities</span><span><strong>6</strong> stories</span><span><strong>1</strong> country to explore</span></div>
 
 ```{r city-map}
 cities <- data.frame(
@@ -41,14 +41,11 @@ cities$popup <- paste0("<div class='city-popup'><small>CITY ATLAS</small><h3>",
                        "° E</small></div>")
 
 leaflet(cities, height = 570, options = leafletOptions(scrollWheelZoom = FALSE)) %>%
-  addProviderTiles(providers$CartoDB.DarkMatter, group = "After dark") %>%
-  addProviderTiles(providers$CartoDB.Positron, group = "Daylight") %>%
+  addTiles(urlTemplate = "https://tile.openstreetmap.org/{z}/{x}/{y}.png") %>%
   addCircleMarkers(lng = ~lng, lat = ~lat, radius = 10,
                    color = "#ffffff", weight = 2, fillColor = "#55e0bd",
                    fillOpacity = 0.9, label = ~name, popup = ~popup) %>%
   fitBounds(lng1 = 70, lat1 = 10, lng2 = 90, lat2 = 31) %>%
-  addLayersControl(baseGroups = c("After dark", "Daylight"),
-                   options = layersControlOptions(collapsed = FALSE)) %>%
   addScaleBar(position = "bottomleft")
 ```
 
@@ -60,8 +57,9 @@ These six points trace a broad sweep of the country: northern plains, western co
 
 ### About this atlas
 
-Created on **27 October 2026** using **R Markdown** and the **Leaflet R package**. Map tiles are supplied by CARTO, with map data from OpenStreetMap contributors; attribution also appears inside the map. An internet connection is required for the basemap tiles.
+Created on **27 October 2026** using **R Markdown** and the **Leaflet R package**. Map tiles and map data are supplied by OpenStreetMap contributors; attribution also appears inside the map. An internet connection is required for the basemap tiles.
 
-[Leaflet for R](https://rstudio.github.io/leaflet/) · [OpenStreetMap](https://www.openstreetmap.org/copyright) · [CARTO attribution](https://carto.com/attributions)
+[Leaflet for R](https://rstudio.github.io/leaflet/) · [OpenStreetMap](https://www.openstreetmap.org/copyright)
 
 <footer>Made with AI assistance. Review and adapt this work according to your course's academic integrity requirements.</footer>
+
