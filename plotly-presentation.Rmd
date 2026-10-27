@@ -1,0 +1,108 @@
+---
+title: "Power, Weight & MPG"
+subtitle: "An interactive look at 32 classic cars"
+date: "27 October 2026"
+output:
+  slidy_presentation:
+    self_contained: true
+    duration: 5
+header-includes:
+  - |
+    <style>
+    body { background:#101d2a; color:#edf3f5; font-family:Arial,sans-serif; }
+    div.slide { padding:36px 60px 70px; box-sizing:border-box; }
+    div.slide h1 { color:#71e2c2; font-size:1.65em; border-bottom:2px solid #395467; padding-bottom:15px; }
+    div.slide.titlepage { background:linear-gradient(135deg,#101d2a,#23485a); padding-top:15vh; }
+    div.slide.titlepage h1 { color:#fff7e8; font-size:2.6em; border:0; }
+    h2,h3,strong { color:#ffe0a3; }
+    a { color:#71e2c2; }
+    p,li { line-height:1.45; }
+    .lead { font-size:1.25em; max-width:900px; }
+    .note { font-size:.65em; color:#c6d2db; }
+    .metric { display:inline-block; margin:20px 55px 20px 0; font-size:2.5em; color:#ffe0a3; }
+    .metric small { display:block; font-size:.26em; color:#d4dde3; }
+    div.toolbar { background:#162b3a; color:#edf3f5; }
+    div.toolbar a { color:#71e2c2; }
+    .plotly { border-radius:12px; overflow:hidden; }
+    </style>
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(plotly)
+cars <- datasets::mtcars
+cars$model <- rownames(cars)
+cars$cylinders <- factor(cars$cyl, levels = c(4, 6, 8),
+                         labels = c("4 cylinders", "6 cylinders", "8 cylinders"))
+r <- cor(cars$wt, cars$mpg)
+```
+
+## The question
+
+<p class="lead">How does vehicle weight relate to fuel economy?</p>
+
+<div class="metric">32<small>cars in the dataset</small></div>
+<div class="metric">1973–74<small>model years</small></div>
+
+Each point on the next slide represents a car. Colour shows cylinder count.
+
+**Navigate:** use the right and left arrow keys, or the slide controls at the bottom. Click outside the chart before using the arrow keys.
+
+<p class="note">Source: R's built-in mtcars dataset, based on 1974 Motor Trend road tests. Historical data, not current vehicle ratings.</p>
+
+## Weight and fuel economy
+
+<p class="note">Hover for a car's details. Drag to zoom. Click a legend label to hide or show a group. Double-click the plot to reset.</p>
+
+```{r interactive-chart}
+plot_ly(cars, x = ~wt, y = ~mpg, color = ~cylinders,
+        colors = c("#007F73", "#B56500", "#7B4AB5"),
+        type = "scatter", mode = "markers", height = 430,
+        marker = list(size = 12, opacity = 0.85,
+                      line = list(color = "white", width = 1)),
+        text = ~paste0("<b>", model, "</b><br>",
+                       "Weight: ", wt, " thousand lb<br>",
+                       "Fuel economy: ", mpg, " MPG (US)<br>",
+                       "Gross horsepower: ", hp, "<br>", cylinders),
+        hoverinfo = "text") %>%
+  layout(xaxis = list(title = "Weight (thousand lb)", gridcolor = "#e4eaf0"),
+         yaxis = list(title = "Miles per US gallon", gridcolor = "#e4eaf0"),
+         paper_bgcolor = "#f7fafc", plot_bgcolor = "#f7fafc",
+         font = list(family = "Arial", color = "#183244", size = 14),
+         legend = list(orientation = "h", x = 0, y = 1.12),
+         margin = list(l = 75, r = 25, b = 65, t = 50),
+         dragmode = "zoom") %>%
+  config(displayModeBar = TRUE, displaylogo = FALSE, responsive = TRUE,
+         scrollZoom = FALSE)
+```
+
+## What the sample shows
+
+<div class="metric">`r sprintf("%.2f", r)`<small>Pearson correlation between weight and MPG</small></div>
+
+Heavier cars generally have lower fuel economy in this sample.
+
+The **`r rownames(cars)[which.max(cars$mpg)]`** has the highest recorded fuel economy at **`r max(cars$mpg)` miles per US gallon**.
+
+Cylinder groups also differ. The chart shows an association, but it cannot isolate the effect of weight from engine design or other factors.
+
+## Explore it yourself
+
+1. Return to the chart using the **left arrow** twice.
+2. Click **8 cylinders** in the legend to hide that group.
+3. Hover over a light car and a heavy car to compare their MPG and horsepower.
+4. Restore the group and drag across a smaller region to zoom in.
+
+<p class="lead">Does the overall pattern remain visible within a cylinder group?</p>
+
+## Sources and methods
+
+**Created: 27 October 2026**
+
+This presentation was generated from an **R Markdown** document using `slidy_presentation`. The interactive chart uses the **Plotly R package**.
+
+Data: `datasets::mtcars`, 32 observations. Weight is in thousands of pounds. MPG uses US gallons. The correlation uses all 32 rows without filtering.
+
+[R dataset documentation](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) · [Plotly for R](https://plotly.com/r/) · [R Markdown source](https://github.com/Aassimrepo/datasciencecoursera/blob/main/plotly-presentation.Rmd)
+
+<p class="note">Created with AI assistance. Review and adapt the work according to your course's academic integrity requirements.</p>
