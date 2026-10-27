@@ -25,10 +25,12 @@ jobs:
           packages: |
             any::rmarkdown
             any::leaflet
+            any::plotly
       - name: Render document
         run: |
           mkdir -p _site
           Rscript -e 'rmarkdown::render("index.Rmd", output_dir = "_site")'
+          Rscript -e 'rmarkdown::render("plotly-presentation.Rmd", output_dir = "_site")'
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
