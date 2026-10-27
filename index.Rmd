@@ -1,0 +1,67 @@
+---
+title: "India, one city at a time"
+date: "27 October 2026"
+output:
+  html_document:
+    self_contained: true
+    theme: null
+    css: style.css
+    toc: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(leaflet)
+```
+
+<div class="eyebrow">THE CITY ATLAS / 01</div>
+
+## Six cities. A thousand possible stories.
+
+From Delhi to Chennai, explore a small collection of India's cities. Click a glowing marker to discover a place, zoom in to explore its streets, or switch the basemap for a different perspective.
+
+<div class="stats"><span><strong>6</strong> cities</span><span><strong>2</strong> map styles</span><span><strong>1</strong> country to explore</span></div>
+
+```{r city-map}
+cities <- data.frame(
+  name = c("Delhi", "Jaipur", "Mumbai", "Kolkata", "Bengaluru", "Chennai"),
+  lat = c(28.6139, 26.9124, 19.0760, 22.5726, 12.9716, 13.0827),
+  lng = c(77.2090, 75.7873, 72.8777, 88.3639, 77.5946, 80.2707),
+  note = c("Begin in the north: zoom in and follow the Yamuna through the capital.",
+           "Explore Rajasthan's capital, west of Delhi.",
+           "Follow the western coastline around this Arabian Sea city.",
+           "Look for the Hooghly River running beside the city.",
+           "Head inland to Karnataka's capital on the southern plateau.",
+           "Finish on the east coast, looking out toward the Bay of Bengal."),
+  stringsAsFactors = FALSE
+)
+cities$popup <- paste0("<div class='city-popup'><small>CITY ATLAS</small><h3>",
+                       cities$name, "</h3><p>", cities$note,
+                       "</p><small>", cities$lat, "° N · ", cities$lng,
+                       "° E</small></div>")
+
+leaflet(cities, height = 570, options = leafletOptions(scrollWheelZoom = FALSE)) %>%
+  addProviderTiles(providers$CartoDB.DarkMatter, group = "After dark") %>%
+  addProviderTiles(providers$CartoDB.Positron, group = "Daylight") %>%
+  addCircleMarkers(lng = ~lng, lat = ~lat, radius = 10,
+                   color = "#ffffff", weight = 2, fillColor = "#55e0bd",
+                   fillOpacity = 0.9, label = ~name, popup = ~popup) %>%
+  fitBounds(lng1 = 70, lat1 = 10, lng2 = 90, lat2 = 31) %>%
+  addLayersControl(baseGroups = c("After dark", "Daylight"),
+                   options = layersControlOptions(collapsed = FALSE)) %>%
+  addScaleBar(position = "bottomleft")
+```
+
+<div class="map-tip">EXPLORE THE MAP &nbsp; Drag to pan · Use + / − to zoom · Select a marker for its story</div>
+
+### A little geography, a little curiosity
+
+These six points trace a broad sweep of the country: northern plains, western coast, eastern riverbanks, and the southern plateau. The markers show approximate city centres, rather than exact attractions or travel routes.
+
+### About this atlas
+
+Created on **27 October 2026** using **R Markdown** and the **Leaflet R package**. Map tiles are supplied by CARTO, with map data from OpenStreetMap contributors; attribution also appears inside the map. An internet connection is required for the basemap tiles.
+
+[Leaflet for R](https://rstudio.github.io/leaflet/) · [OpenStreetMap](https://www.openstreetmap.org/copyright) · [CARTO attribution](https://carto.com/attributions)
+
+<footer>Made with AI assistance. Review and adapt this work according to your course's academic integrity requirements.</footer>

@@ -1,0 +1,23 @@
+INDIA CITY ATLAS
+
+Status: R Markdown source prepared; not yet rendered or published.
+Creation date: 27 October 2026.
+
+Publish with GitHub Pages:
+1. Create a public GitHub repository and put this folder's contents at its root.
+   Include the hidden .github folder. Use main as the default branch.
+2. Under repository Settings > Pages, select GitHub Actions as the source.
+3. Run the workflow named Render R Markdown and publish to Pages.
+4. Wait for the workflow to succeed. Its deployment link is the public URL.
+5. Open that URL and verify the date, map tiles, zoom, city popups and basemap toggle.
+
+To render locally, use a current R installation with Pandoc (included with
+RStudio). Set this folder as the working directory and run source('render.R').
+This installs missing R packages and produces index.html.
+The HTML may also be uploaded to NeoCities or published through RStudio to RPubs.
+
+Only publish this folder, not the parent SecureVault workspace.
+The creation date is intentionally fixed, rather than changing on each build.
+If grading takes place two months or more later, the date criterion may not pass.
+This document includes an AI assistance disclosure. Review your course's rules
+before using it as coursework; do not represent AI-created work as solely yours.

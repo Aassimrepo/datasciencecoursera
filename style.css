@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600&display=swap');
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #101d2a; color: #d4dde3; font: 17px/1.7 'DM Sans', sans-serif; }
+.main-container { max-width: 1100px; padding: 55px 28px; margin: auto; }
+h1, h2, h3 { color: #f5f3e9; line-height: 1.15; }
+h1 { font: 600 clamp(38px, 6vw, 70px)/1.1 'Playfair Display', Georgia, serif; max-width: 850px; margin: 0 0 16px; }
+h2 { font-size: clamp(25px, 4vw, 36px); margin-top: 14px; }
+h3 { font-size: 24px; margin-top: 36px; }
+h4.date { color: #a6b6c5; font-size: 14px; font-weight: 400; }
+.eyebrow { color: #55e0bd; letter-spacing: .22em; font-size: 12px; margin-top: 42px; }
+p { max-width: 830px; }
+a { color: #79e9d0; }
+.stats { display: flex; flex-wrap: wrap; gap: 32px; padding: 20px 0 28px; }
+.stats span { color: #a6b6c5; font-size: 14px; }
+.stats strong { color: #f5f3e9; font-size: 25px; margin-right: 7px; }
+.leaflet { border: 1px solid #415567; border-radius: 16px; overflow: hidden; width: 100% !important; }
+.leaflet-control { color-scheme: light; }
+.leaflet-control a { color: #172b37; }
+.leaflet-control-layers { color: #172b37; }
+.city-popup { color: #193140; min-width: 180px; }
+.city-popup h3 { color: #193140; margin: 8px 0; font-size: 23px; }
+.city-popup p { line-height: 1.5; }
+.city-popup small { color: #45616f; }
+.map-tip { font-size: 12px; color: #a6b6c5; margin: 12px 0 32px; }
+footer { margin-top: 45px; padding-top: 18px; border-top: 1px solid #344657; color: #a6b6c5; font-size: 12px; }
+@media(max-width: 600px) { .main-container { padding: 32px 18px; } .leaflet { height: 450px !important; } }
