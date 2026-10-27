@@ -6,25 +6,6 @@ output:
   slidy_presentation:
     self_contained: true
     duration: 5
-header-includes:
-  - |
-    <style>
-    body { background:#101d2a; color:#edf3f5; font-family:Arial,sans-serif; }
-    div.slide { padding:36px 60px 70px; box-sizing:border-box; }
-    div.slide h1 { color:#71e2c2; font-size:1.65em; border-bottom:2px solid #395467; padding-bottom:15px; }
-    div.slide.titlepage { background:linear-gradient(135deg,#101d2a,#23485a); padding-top:15vh; }
-    div.slide.titlepage h1 { color:#fff7e8; font-size:2.6em; border:0; }
-    h2,h3,strong { color:#ffe0a3; }
-    a { color:#71e2c2; }
-    p,li { line-height:1.45; }
-    .lead { font-size:1.25em; max-width:900px; }
-    .note { font-size:.65em; color:#c6d2db; }
-    .metric { display:inline-block; margin:20px 55px 20px 0; font-size:2.5em; color:#ffe0a3; }
-    .metric small { display:block; font-size:.26em; color:#d4dde3; }
-    div.toolbar { background:#162b3a; color:#edf3f5; }
-    div.toolbar a { color:#71e2c2; }
-    .plotly { border-radius:12px; overflow:hidden; }
-    </style>
 ---
 
 ```{r setup, include=FALSE}
@@ -57,7 +38,7 @@ Each point on the next slide represents a car. Colour shows cylinder count.
 ```{r interactive-chart}
 plot_ly(cars, x = ~wt, y = ~mpg, color = ~cylinders,
         colors = c("#007F73", "#B56500", "#7B4AB5"),
-        type = "scatter", mode = "markers", height = 430,
+        type = "scatter", mode = "markers", height = 430, width = "100%",
         marker = list(size = 12, opacity = 0.85,
                       line = list(color = "white", width = 1)),
         text = ~paste0("<b>", model, "</b><br>",
@@ -106,3 +87,23 @@ Data: `datasets::mtcars`, 32 observations. Weight is in thousands of pounds. MPG
 [R dataset documentation](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) · [Plotly for R](https://plotly.com/r/) · [R Markdown source](https://github.com/Aassimrepo/datasciencecoursera/blob/main/plotly-presentation.Rmd)
 
 <p class="note">Created with AI assistance. Review and adapt the work according to your course's academic integrity requirements.</p>
+
+
+<style>
+body { background:#101d2a; color:#edf3f5; font-family:Arial,sans-serif; }
+div.slide { padding:36px 60px 70px; box-sizing:border-box; }
+div.slide h1 { color:#71e2c2; font-size:1.65em; border-bottom:2px solid #395467; padding-bottom:15px; }
+div.slide.titlepage { background:linear-gradient(135deg,#101d2a,#23485a); padding-top:15vh; }
+div.slide.titlepage h1 { color:#fff7e8; font-size:2.6em; border:0; }
+h2,h3,strong { color:#ffe0a3; }
+a { color:#71e2c2; }
+p,li { line-height:1.45; }
+.lead { font-size:1.25em; max-width:900px; }
+.note { font-size:.65em; color:#c6d2db; }
+.metric { display:inline-block; margin:20px 55px 20px 0; font-size:2.5em; color:#ffe0a3; }
+.metric small { display:block; font-size:.26em; color:#d4dde3; }
+div.toolbar { background:#162b3a; color:#edf3f5; }
+div.toolbar a { color:#71e2c2; }
+.plotly { border-radius:12px; overflow:hidden; }
+</style>
+
